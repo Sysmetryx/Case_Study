@@ -15,6 +15,8 @@ As of 02/12/18 :
   - numpy
   - concurrent.futures
   - time
+
+## Need info ?
 All questions should be asked on this page, or sent to :
 sysmetryxgosu@gmail.com
 with proper object.
