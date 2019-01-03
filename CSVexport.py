@@ -37,9 +37,8 @@ def get_list(file_list, i, variable):
         ----------
             flattened ndarray.
         """
-
-    return np.array(netCDF4.Dataset(file_list[i]).variables[variable][:,
-                    :]).flatten().tolist()
+    dataset = netCDF4.Dataset(file_list[i]).variables[variable][:, :]
+    return np.array(dataset).flatten().tolist()
 
 
 def export_csv(i):
@@ -55,18 +54,20 @@ def export_csv(i):
             """
 
     header = 'lon,lat,sst,412,443,490,555'
-    full_list = [get_file_list('SST'), get_file_list('412'), get_file_list(
-            '443'),
-                 get_file_list('490'), get_file_list('555')]
-    buffer = [get_list(full_list[0], i, 'lon')]
-    buffer += [get_list(full_list[0], i, 'lat')]
-    buffer += [get_list(full_list[0], i, 'SST')]
-    buffer += [get_list(full_list[1], i, 'NRRS412_mean')]
-    buffer += [get_list(full_list[2], i, 'NRRS443_mean')]
-    buffer += [get_list(full_list[3], i, 'NRRS490_mean')]
-    buffer += [get_list(full_list[4], i, 'NRRS555_mean')]
+    full_list = [get_file_list('412'), get_file_list('443'),
+                 get_file_list('490'), get_file_list('555'),
+                 get_file_list('SST')]
+    buffer = [np.loadtxt("lon.csv", delimiter=",").flatten().tolist()]
+    buffer += [np.loadtxt("lat.csv", delimiter=",").flatten().tolist()]
+    buffer += [get_list(full_list[4], i, 'SST')]
+    buffer += [get_list(full_list[0], i, 'NRRS412_mean')]
+    buffer += [get_list(full_list[1], i, 'NRRS443_mean')]
+    buffer += [get_list(full_list[2], i, 'NRRS490_mean')]
+    buffer += [get_list(full_list[3], i, 'NRRS555_mean')]
     buffer = np.array(buffer).T
-    np.savetxt("foo" + str(i) + ".csv", buffer, delimiter=",", header=header)
+    np.savetxt("fichiers_csv/" + "foo" + str(i) + ".csv", buffer, fmt='%f',
+               delimiter=",",
+               header=header)
     del buffer
     return True
 

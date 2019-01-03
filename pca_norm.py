@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 
 
 # chargement des donées
-data = np.loadtxt("foo3" + ".csv", delimiter=",", skiprows=1, usecols=[2, 3,
+data = np.loadtxt("fichiers_csv/" + "foo3" + ".csv", delimiter=",",
+                  skiprows=1, usecols=[2, 3,
                                                                        4, 5,
                                                                        6])
 # normalisation

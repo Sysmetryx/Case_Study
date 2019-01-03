@@ -55,7 +55,8 @@ def get_season(week):
 
 
 def append_week_year_season(i):
-    original_file = np.loadtxt("foo" + str(i) + ".csv", delimiter=",",
+    original_file = np.loadtxt("fichiers_csv/" + "foo" + str(i) + ".csv",
+                               delimiter=",",
                    skiprows=1)
     final_header = "lon,lat,sst,412,443,490,555,year,week,season"
     year = get_year(i)
