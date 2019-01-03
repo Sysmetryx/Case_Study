@@ -4,13 +4,12 @@ import time
 
 
 def load_csv(filename):
-    return np.loadtxt(open(str(filename) + ".csv", "rb"), delimiter=",",
-                      skiprows=1)
+    return np.loadtxt(filename + ".csv", delimiter=",", skiprows=1)
 
 
 def save_csv(filename, data):
     header = "lon,lat,sst,412,443,490,555"
-    np.savetxt(filename + ".csv", data, delimiter=",",
+    np.savetxt(filename + ".csv", data, fmt='%f', delimiter=",",
                header=header)
 
 
@@ -18,10 +17,15 @@ def delete_nan_rows(data):
     return data[~np.isnan(data).any(axis=1)]
 
 
+def delete_999(data):
+    return data[~np.any(data == -999.000000, axis=1)]
+
+
 def alter_csv(i):
     filename = "foo" + str(i)
     data = load_csv(filename)
     data = delete_nan_rows(data)
+    data = delete_999(data)
     save_csv(filename, data)
     del data
     return True
